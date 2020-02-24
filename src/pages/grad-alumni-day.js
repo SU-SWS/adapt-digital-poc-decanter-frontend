@@ -163,15 +163,14 @@ const GradAlumniDay = ({ data, location }) => {
                             <article class="event-session--wrapper" key={node.eventTitle}>
                                 <header>
 
-                                    <h1 class={"event-title"}>{node.eventTitle}</h1>
+                                    <h2 class={"event-pricing"}>Pricing</h2>
                                     {/*<div>[Rich Text - Session Description Goes Here.]</div>*/}
                                 </header>
+                                {/* event > product > title*/}
+                                {/* event > product > description*/}
+                                {/* event > product > price*/}
+                                {/* event > product > whatever field contains 'regular price' text*/}
 
-                                <div className="event-date">{node.eventStartDate} | Stanford University</div>
-
-                                {/* This works but we don't care about the card title:*/}
-                                {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardTitle : "no card title"}</h3>*/}
-                                {/* This doesn't work yet: */}
                                 {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardBody.content.content.value : "no card body"}</h3>*/}
                                 {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>*/}
 
