@@ -4,6 +4,7 @@ import {rhythm} from "../utils/typography";
 
 const GradAlumniDay = ({ data, location }) => {
 
+    const event = data.allContentfulEvent.edges
     const sessions = data.allContentfulEventSession.edges
 
     // const people = sessions.node
@@ -83,16 +84,39 @@ const GradAlumniDay = ({ data, location }) => {
                 </section>
             </section>
             <div class="page-container grad-alumni-day">
-                <div class="grad-alumni-day--intro">
-                <h1>Grad Alumni Day</h1>
+                {event.map(({ node }) => {
+                    return (
+                        <div className="grad-alumni-day--intro">
+
+                        <article class="event-session--wrapper" key={node.eventTitle}>
+                            <header>
+
+                                <h1 class={"event-title"}>{node.eventTitle}</h1>
+                                {/*<div>[Rich Text - Session Description Goes Here.]</div>*/}
+                            </header>
+
+                            <div className="event-date">{node.eventStartDate} | Stanford University</div>
+
+                            {/* This works but we don't care about the card title:*/}
+                            {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardTitle : "no card title"}</h3>*/}
+                            {/* This doesn't work yet: */}
+                            {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardBody.content.content.value : "no card body"}</h3>*/}
+                                {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>*/}
+
+
+                        </article>
+                        </div>
+
+                    )
+                })}
+
                 <p class="grad-alumni-day--date">Saturday, March 7, 2020 | Stanford University</p>
-                <p>Return to campus for a day planned just for Stanford graduate alumni.
+                <p>STATIC TEXT FOR NOW (Need to update to pull from contentful:) Return to campus for a day planned just for Stanford graduate alumni.
                     You'll get inspired with thought-provoking micro lectures, faculty talks and
                     conversations with fellow grad alumni before winding down at an evening wine reception
                     with hearty hors d'oeuvres.</p>
                 <button value="decanter" name="register-button" className="su-button" type="button">Register
                 </button>
-                </div>
 
                 <h2>See what's in store</h2>
                 <p>Present list of sessions here (title, description, etc)</p>
@@ -131,6 +155,32 @@ const GradAlumniDay = ({ data, location }) => {
                 })}
 
             </div>
+            <div class="event-pricing-section">
+
+                {event.map(({ node }) => {
+                    return (
+
+                            <article class="event-session--wrapper" key={node.eventTitle}>
+                                <header>
+
+                                    <h1 class={"event-title"}>{node.eventTitle}</h1>
+                                    {/*<div>[Rich Text - Session Description Goes Here.]</div>*/}
+                                </header>
+
+                                <div className="event-date">{node.eventStartDate} | Stanford University</div>
+
+                                {/* This works but we don't care about the card title:*/}
+                                {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardTitle : "no card title"}</h3>*/}
+                                {/* This doesn't work yet: */}
+                                {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardBody.content.content.value : "no card body"}</h3>*/}
+                                {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>*/}
+
+
+                            </article>
+
+                    )
+                })}
+            </div>
 
         </main>
     )
@@ -146,13 +196,23 @@ query GradAlumniData {
       title
     }
   }
-  allContentfulEvent(sort: {fields: [eventStartDate], order: ASC}) {
+  allContentfulEvent(filter: {id: {eq: "712f2cb1-31de-5232-83f8-0c50210b9de2"}}) {
     edges {
       node {
         id
         eventTitle
-        eventStartDate(formatString: "MMMM Do, YYYY h:mm")
+        eventStartDate(formatString: "N MMMM Do, YYYY")
         eventEndDate(formatString: "MMMM Do, YYYY h:mm")
+        eventCardsTop {
+          cardTitle
+          cardBody {
+            content {
+              content {
+                value
+              }
+            }
+          }
+        }
       }
     }
   }
