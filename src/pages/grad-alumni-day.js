@@ -85,7 +85,7 @@ const GradAlumniDay = ({ data, location }) => {
             <div class="page-container grad-alumni-day">
                 <div class="grad-alumni-day--intro">
                 <h1>Grad Alumni Day</h1>
-                <p>Saturday, March 7, 2020 | Stanford University</p>
+                <p class="grad-alumni-day--date">Saturday, March 7, 2020 | Stanford University</p>
                 <p>Return to campus for a day planned just for Stanford graduate alumni.
                     You'll get inspired with thought-provoking micro lectures, faculty talks and
                     conversations with fellow grad alumni before winding down at an evening wine reception
@@ -100,23 +100,27 @@ const GradAlumniDay = ({ data, location }) => {
                 {sessions.map(({ node }) => {
                     return (
 
-                        <article key={node.sessionTitle}>
+                        <article class="event-session--wrapper" key={node.sessionTitle}>
                             <header>
 
-                                <h3>{node.sessionStartTime}-{node.sessionEndTime} {node.sessionTitle}</h3>
-                                <div>[Session Description Goes Here.]</div>
+                                <h3 class={"session-title"}>{node.sessionStartTime}-{node.sessionEndTime} {node.sessionTitle}</h3>
+                                <div>[Rich Text - Session Description Goes Here.]</div>
                             </header>
                             {/*<h3>{node.sessionPeople.personDisplayName}</h3>*/}
                             <div class="session-people">
-                                <div>[Person information Goes Here.]</div>
 
-
-                                <h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : "no people"}</h3>
-                                <div>{node.sessionPeople ? node.sessionPeople[0].presentationTitle : "no people"}</div>
-                                <div>{node.sessionPeople ? node.sessionPeople[0].personTitle : "no people"}</div>
-                                <div>{node.sessionPeople ? node.sessionPeople[0].personClassYear : "no people"}</div>
+                                {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : "no people"}</h3>*/}
+                                <h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>
+                                <div>{node.sessionPeople ? node.sessionPeople[0].presentationTitle : ""}</div>
+                                <div>{node.sessionPeople ? node.sessionPeople[0].personTitle : ""}</div>
+                                <div>{node.sessionPeople ? node.sessionPeople[0].personClassYear : ""}</div>
                                 {/*var personImage == {node.sessionPeople ? node.sessionPeople[0].personImage.file.url : "no people"}</div>*/}
-                                <div>{node.sessionPeople ? node.sessionPeople[0].personImage.file.url : "no people"}</div>
+                                <div>{node.sessionPeople ? 'File url to render next: https:' + node.sessionPeople[0].personImage.file.url : ""}</div>
+                                {/*<img source={node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url : ""}>*/}
+                                {/*    <img src={ require( node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url ) } />*/}
+                                <div>{node.sessionPeople ? "File alt tag description: " + node.sessionPeople[0].personImage.description : ""}</div>
+
+
 
 
 
@@ -176,6 +180,8 @@ query GradAlumniData {
               fileName
               contentType
             }
+            description
+            title
           }
           personBiography {
             content {
