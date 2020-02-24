@@ -1,0 +1,24 @@
+html {
+    background-color: lavenderblush;
+}
+
+/* masthead */
+
+.su-lockup__line1.su-handwriting.ad-logo {
+    text-transform: none;
+}
+
+/* page content styling */
+
+.page-container.grad-alumni-day {
+    width: 820px;
+    max-width: 90%;
+    margin-left: auto;
+    padding: 100px 30px;
+    margin-right: auto;
+
+}
+.grad-alumni-day--intro {
+    padding: 0 0 30px 0;
+    text-align: center;
+}

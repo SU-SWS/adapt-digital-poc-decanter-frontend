@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^13.4.0",
+    "decanter": "^6.0.3",
     "dotenv": "^8.2.0",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.39",
