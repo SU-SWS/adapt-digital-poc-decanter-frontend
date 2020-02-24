@@ -2,7 +2,7 @@ import React from "react"
 import {graphql, Link} from "gatsby";
 import {rhythm} from "../utils/typography";
 
-const AboutPage = ({ data, location }) => {
+const GradAlumniDay = ({ data, location }) => {
 
     const sessions = data.allContentfulEventSession.edges
 
@@ -132,11 +132,11 @@ const AboutPage = ({ data, location }) => {
     )
 }
 
-export default AboutPage
+export default GradAlumniDay
 
 
 export const pageQuery = graphql`
-query Sessons {
+query GradAlumniData {
   site {
     siteMetadata {
       title
