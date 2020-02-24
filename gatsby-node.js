@@ -4,7 +4,7 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const blogPost = path.resolve(`./src/templates/blog-post.js`)
+  const event = path.resolve(`./src/templates/blog-event.js`)
   const result = await graphql(
     `
       {
@@ -15,7 +15,7 @@ exports.createPages = async ({ graphql, actions }) => {
           edges {
             node {
               fields {
-                slug
+                path
               }
               frontmatter {
                 title
@@ -31,18 +31,18 @@ exports.createPages = async ({ graphql, actions }) => {
     throw result.errors
   }
 
-  // Create blog posts pages.
-  const posts = result.data.allMarkdownRemark.edges
+  // Create blog events pages.
+  const events = result.data.allContentfulEvent.edges
 
-  posts.forEach((post, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1].node
-    const next = index === 0 ? null : posts[index - 1].node
+  events.forEach((event, index) => {
+    const previous = index === events.length - 1 ? null : events[index + 1].node
+    const next = index === 0 ? null : events[index - 1].node
 
     createPage({
-      path: post.node.fields.slug,
-      component: blogPost,
+      path: event.nodes.path,
+      component: event,
       context: {
-        slug: blogPost.node.fields.slug,
+        slug: event.nodes.path,
         previous,
         next,
       },
@@ -56,7 +56,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   if (node.internal.type === `MarkdownRemark`) {
     const value = createFilePath({ node, getNode })
     createNodeField({
-      name: `slug`,
+      name: `path`,
       node,
       value,
     })
