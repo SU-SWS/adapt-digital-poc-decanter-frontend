@@ -6,6 +6,7 @@ const GradAlumniDay = ({ data, location }) => {
 
     const event = data.allContentfulEvent.edges
     const sessions = data.allContentfulEventSession.edges
+    const video = data.allContentfulEventSession.edges
 
     // const people = sessions.node
 
@@ -155,31 +156,37 @@ const GradAlumniDay = ({ data, location }) => {
                 })}
 
             </div>
-            <div class="event-pricing-section">
 
                 {event.map(({ node }) => {
                     return (
 
-                            <article class="event-session--wrapper" key={node.eventTitle}>
-                                <header>
 
-                                    <h2 class={"event-pricing"}>Pricing</h2>
-                                    {/*<div>[Rich Text - Session Description Goes Here.]</div>*/}
-                                </header>
-                                {/* event > product > title*/}
-                                {/* event > product > description*/}
-                                {/* event > product > price*/}
-                                {/* event > product > whatever field contains 'regular price' text*/}
+                            <article class="event-pricing--wrapper" key={node.eventTitle}>
+                                    <header>
 
-                                {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardBody.content.content.value : "no card body"}</h3>*/}
-                                {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>*/}
+                                        <h2 class={"event-pricing"}>Pricing</h2>
+                                        {/*<div>[Rich Text - Session Description Goes Here.]</div>*/}
+                                    </header>
+
+                                    {/* event > product > title*/}
+                                    {/* event > product > description*/}
+                                    {/* event > product > price*/}
+                                    {/* event > product > whatever field contains 'regular price' text*/}
+
+                                    {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardBody.content.content.value : "no card body"}</h3>*/}
+                                    {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>*/}
 
 
                             </article>
 
-                    )
+                    //    Video Section
+
+                    // {node.video.file.url}
+                    // {node.video.title}
+                    // {node.video.description}
+
+                )
                 })}
-            </div>
 
         </main>
     )
@@ -199,7 +206,20 @@ query GradAlumniData {
     edges {
       node {
         id
+        hero {
+          file {
+            url
+          }
+        }
+        heroAltText
         eventTitle
+        intro {
+          content {
+            content {
+              value
+            }
+          }
+        }
         eventStartDate(formatString: "N MMMM Do, YYYY")
         eventEndDate(formatString: "MMMM Do, YYYY h:mm")
         eventCardsTop {
@@ -210,6 +230,13 @@ query GradAlumniData {
                 value
               }
             }
+          }
+        }
+        video {
+          title
+          description
+          file {
+            url
           }
         }
       }
