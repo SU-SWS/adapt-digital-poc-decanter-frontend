@@ -165,8 +165,8 @@ const GradAlumniDay = ({ data, location }) => {
                 {event.map(({ node }) => {
                     return (
 
-
-                            <article class="event-pricing--wrapper" key={node.eventTitle}>
+                        <div>
+                            <article class="event-pricing--wrapper" key={node.eventPricing ? node.eventPricing[0].productName : "Event Pricing"}>
                                     <header>
 
                                         <h2 class={"event-pricing"}>Pricing</h2>
@@ -186,14 +186,29 @@ const GradAlumniDay = ({ data, location }) => {
 
 
                             </article>
+                            < article className = "event-video--wrapper text-centered"  key="Video Section">
 
-                    //    Video Section
+                                <div class="watch-video-label">Watch</div>
+                                <h3 class="video-title-label">Video Title: {node.video ?  node.video.title : "Video Title"}</h3>
 
-                    // {node.video.file.url}
-                    // {node.video.title}
-                    // {node.video.description}
+                                <div>Video url: {node.video ? "https:" + node.video.file.url : "Video Url"}</div>
+                                <div>Rich Text - Video description goes here later</div>
+                                {/*// {node.video.description}*/}
+                            </article>
 
-                )
+                            < article className = "event-quote--wrapper"  key="Quote Section">
+
+                                <h4 class="text-centered">Rich text - Quote testimonialText field goes here</h4>
+
+                                <div className="text-centered">- Quote Author goes here</div>
+
+                                {/*<div>Quote Author: {node.quotes ? "https:" + node.quotes[0].testimonialAuthor : "Quote Author"}</div>*/}
+
+                            </article>
+
+
+                        </div>
+                    )
                 })}
 
         </main>
@@ -251,6 +266,7 @@ query GradAlumniData {
             url
           }
         }
+
       }
     }
   }
@@ -296,3 +312,9 @@ query GradAlumniData {
 
 
 `
+
+
+// quotes {
+//   testimonialTitle
+//   testimonialAuthor
+// }
