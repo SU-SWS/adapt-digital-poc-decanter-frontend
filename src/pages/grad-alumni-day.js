@@ -6,7 +6,7 @@ const GradAlumniDay = ({ data, location }) => {
 
     const event = data.allContentfulEvent.edges
     const sessions = data.allContentfulEventSession.edges
-    const video = data.allContentfulEventSession.edges
+
 
     // const people = sessions.node
 
@@ -96,14 +96,22 @@ const GradAlumniDay = ({ data, location }) => {
                                 {/*<div>[Rich Text - Session Description Goes Here.]</div>*/}
                             </header>
 
-                            <div className="event-date">{node.eventStartDate} | Stanford University</div>
-
+                            <div className="grad-alumni-day--date event-date">Saturday {node.eventStartDate} | Stanford University</div>
+                            {/*<p>{node.intro.content.content.value}</p>*/}
+                            <div>{node.intro.content.content ? node.intro.content.content.value : "Rich text goes here - doesn't work yet"}</div>
+                            <p>STATIC TEXT FOR NOW (Need to update to pull from contentful:) Return to campus for a day planned just for Stanford graduate alumni.
+                                You'll get inspired with thought-provoking micro lectures, faculty talks and
+                                conversations with fellow grad alumni before winding down at an evening wine reception
+                                with hearty hors d'oeuvres.</p>
                             {/* This works but we don't care about the card title:*/}
                             {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardTitle : "no card title"}</h3>*/}
                             {/* This doesn't work yet: */}
                             {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardBody.content.content.value : "no card body"}</h3>*/}
                                 {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>*/}
 
+                            {/*   button should pull from the card later */}
+                            <button value="decanter" name="register-button" className="su-button" type="button">STATIC TEMP Register
+                            </button>
 
                         </article>
                         </div>
@@ -111,13 +119,10 @@ const GradAlumniDay = ({ data, location }) => {
                     )
                 })}
 
-                <p class="grad-alumni-day--date">Saturday, March 7, 2020 | Stanford University</p>
-                <p>STATIC TEXT FOR NOW (Need to update to pull from contentful:) Return to campus for a day planned just for Stanford graduate alumni.
-                    You'll get inspired with thought-provoking micro lectures, faculty talks and
-                    conversations with fellow grad alumni before winding down at an evening wine reception
-                    with hearty hors d'oeuvres.</p>
-                <button value="decanter" name="register-button" className="su-button" type="button">Register
-                </button>
+                {/*<p class="grad-alumni-day--date">Saturday, March 7, 2020 | Stanford University</p>*/}
+
+
+
 
                 <h2>See what's in store</h2>
                 <p>Present list of sessions here (title, description, etc)</p>
@@ -167,7 +172,10 @@ const GradAlumniDay = ({ data, location }) => {
                                         <h2 class={"event-pricing"}>Pricing</h2>
                                         {/*<div>[Rich Text - Session Description Goes Here.]</div>*/}
                                     </header>
-
+                                    <h3>{node.eventPricing ? node.eventPricing[0].productName : ""}</h3>
+                                    {/* add Rich text Pricing Description*/}
+                                    <p>Rich text pricing description goes here.</p>
+                                    <div>{node.eventPricing ? "$" + node.eventPricing[0].productPrice : ""}</div>
                                     {/* event > product > title*/}
                                     {/* event > product > description*/}
                                     {/* event > product > price*/}
@@ -220,7 +228,7 @@ query GradAlumniData {
             }
           }
         }
-        eventStartDate(formatString: "N MMMM Do, YYYY")
+        eventStartDate(formatString: "MMMM Do, YYYY")
         eventEndDate(formatString: "MMMM Do, YYYY h:mm")
         eventCardsTop {
           cardTitle
@@ -231,6 +239,10 @@ query GradAlumniData {
               }
             }
           }
+        }
+        eventPricing {
+          productName
+          productPrice 
         }
         video {
           title
