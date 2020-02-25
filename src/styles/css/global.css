@@ -43,3 +43,17 @@ html {
     margin-right: auto;
 /* set background to light gray here - secondary fog color*/
 }
+
+.text-centered {
+    text-align: center;
+}
+
+.event-video--wrapper {
+    padding: 109px 30px 108px;
+}
+.watch-video-label {
+    margin-bottom: 18px;
+}
+.video-title-label {
+    margin-bottom: 36px;
+}
