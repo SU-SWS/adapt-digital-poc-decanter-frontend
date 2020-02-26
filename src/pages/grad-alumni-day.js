@@ -91,13 +91,10 @@ const GradAlumniDay = ({ data, location }) => {
 
                         <article class="event-session--wrapper" key={node.eventTitle}>
                             <header>
-
                                 <h1 class={"event-title"}>{node.eventTitle}</h1>
-                                {/*<div>[Rich Text - Session Description Goes Here.]</div>*/}
                             </header>
 
                             <div className="grad-alumni-day--date event-date">Saturday {node.eventStartDate} | Stanford University</div>
-                            {/*<p>{node.intro.content.content.value}</p>*/}
                             <div>{node.intro.content.content ? node.intro.content.content.value : "Rich text goes here - doesn't work yet"}</div>
                             <p>STATIC TEXT FOR NOW (Need to update to pull from contentful:) Return to campus for a day planned just for Stanford graduate alumni.
                                 You'll get inspired with thought-provoking micro lectures, faculty talks and
@@ -118,10 +115,6 @@ const GradAlumniDay = ({ data, location }) => {
 
                     )
                 })}
-
-                {/*<p class="grad-alumni-day--date">Saturday, March 7, 2020 | Stanford University</p>*/}
-
-
 
 
                 <h2>See what's in store</h2>
@@ -188,7 +181,7 @@ const GradAlumniDay = ({ data, location }) => {
                     return (
 
                         <div>
-                            <article class="event-pricing--wrapper" key={node.eventPricing ? node.eventPricing[0].productName : "Event Pricing"}>
+                            <section class="event-pricing--wrapper" key={node.eventPricing ? node.eventPricing[0].productName : "Event Pricing"}>
                                 <div class="event-pricing--inner-wrapper text-centered">
                                     <header>
                                         <h2 class={"event-pricing"}>Pricing</h2>
@@ -197,9 +190,9 @@ const GradAlumniDay = ({ data, location }) => {
                                         {priceItems}
                                     </div>
                                 </div>
-                            </article>
+                            </section>
 
-                            <div class="bottom-page-section constrained-width">
+                            <section class="bottom-page-section constrained-width">
 
                                 < article className = "event-video--wrapper text-centered"  key="Video Section">
 
@@ -222,7 +215,7 @@ const GradAlumniDay = ({ data, location }) => {
                                 </article>
 
 
-                            </div>
+                            </section>
                         </div>
                     )
                 })}
