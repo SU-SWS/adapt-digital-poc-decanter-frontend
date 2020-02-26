@@ -36,12 +36,32 @@ html {
 }
 
 .event-pricing--wrapper {
+    padding: 90px 0 108px 0;
+    background: #f4f4f4;
+    /* set background to light gray here - secondary fog color*/
+}
+.event-pricing--inner-wrapper {
     width: 1020px;
     max-width: 90%;
     margin-left: auto;
-    padding: 90px 0 108px 0;
     margin-right: auto;
-/* set background to light gray here - secondary fog color*/
+
+}
+.price-items--wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.event-pricing--wrapper .su-card {
+    max-width: 90%;
+    width: 493px;
+    margin-bottom: 30px;
+}
+
+.product--price {
+    /*font style 5*/
+    font-size: 40px;
+    font-weight: bold;
 }
 
 .text-centered {
@@ -56,4 +76,9 @@ html {
 }
 .video-title-label {
     margin-bottom: 36px;
+}
+
+
+.event-quote--wrapper {
+    margin-bottom: 45px;
 }
