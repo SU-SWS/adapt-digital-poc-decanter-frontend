@@ -84,33 +84,39 @@ const GradAlumniDay = ({ data, location }) => {
                     </nav>
                 </section>
             </section>
+            <div class="grad-alumni-banner">
+                {/*  Need to check documentation and get this image working and referencing correctly */}
+                {/*<img source={node.hero.file.url} alt_tag={node.heroAltText}></img>*/}
+
+            </div>
             <div class="page-container grad-alumni-day">
                 {event.map(({ node }) => {
                     return (
                         <div className="grad-alumni-day--intro">
 
-                        <article class="event-session--wrapper" key={node.eventTitle}>
-                            <header>
-                                <h1 class={"event-title"}>{node.eventTitle}</h1>
-                            </header>
+                            <article class="event-session--wrapper" key={node.eventTitle}>
+                                <header>
+                                    <h1 class="event-title">{node.eventTitle}</h1>
+                                </header>
 
-                            <div className="grad-alumni-day--date event-date">Saturday {node.eventStartDate} | Stanford University</div>
-                            <div>{node.intro.content.content ? node.intro.content.content.value : "Rich text goes here - doesn't work yet"}</div>
-                            <p>STATIC TEXT FOR NOW (Need to update to pull from contentful:) Return to campus for a day planned just for Stanford graduate alumni.
-                                You'll get inspired with thought-provoking micro lectures, faculty talks and
-                                conversations with fellow grad alumni before winding down at an evening wine reception
-                                with hearty hors d'oeuvres.</p>
-                            {/* This works but we don't care about the card title:*/}
-                            {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardTitle : "no card title"}</h3>*/}
-                            {/* This doesn't work yet: */}
-                            {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardBody.content.content.value : "no card body"}</h3>*/}
-                                {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>*/}
+                                <div className="grad-alumni-day--date event-date">Saturday {node.eventStartDate} | Stanford University</div>
+                                <div>{node.intro.content.content ? node.intro.content.content.value : "Rich text goes here - doesn't work yet"}</div>
+                                <p>STATIC TEXT FOR NOW (Need to update to pull from contentful:) Return to campus for a day planned just for Stanford graduate alumni.
+                                    You'll get inspired with thought-provoking micro lectures, faculty talks and
+                                    conversations with fellow grad alumni before winding down at an evening wine reception
+                                    with hearty hors d'oeuvres.</p>
+                                {/* This works but we don't care about the card title:*/}
+                                {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardTitle : "no card title"}</h3>*/}
+                                {/* This doesn't work yet: */}
+                                {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardBody.content.content.value : "no card body"}</h3>*/}
+                                    {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>*/}
 
-                            {/*   button should pull from the card later */}
-                            <button value="decanter" name="register-button" className="su-button" type="button">STATIC TEMP Register
-                            </button>
+                                {/*   button should pull from the card later */}
+                                <button value="decanter" name="register-button" className="su-button" type="button">STATIC TEMP Register
+                                </button>
 
-                        </article>
+                            </article>
+
                         </div>
 
                     )
