@@ -8,15 +8,23 @@ if(process.env.NODE_ENV !== 'production') {
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
-    author: `Kyle Mathews`,
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    title: `Stanford Grad Alumni Day POC`,
+    author: `Katria Lesser, Stanford Web Services`,
+    description: `A poc for gatsby react front end with contentful backend`,
     siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
     social: {
       twitter: `kylemathews`,
     },
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        cssLoaderOptions: {
+          camelCase: false,
+        },
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

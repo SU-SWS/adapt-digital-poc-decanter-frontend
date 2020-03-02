@@ -8,6 +8,14 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await graphql(
     `
       {
+        allContentfulEvent {
+          edges {
+            node {
+              id
+              path
+            }
+          }
+        }
         allMarkdownRemark(
           sort: { fields: [frontmatter___date], order: DESC }
           limit: 1000
@@ -39,10 +47,10 @@ exports.createPages = async ({ graphql, actions }) => {
     const next = index === 0 ? null : events[index - 1].node
 
     createPage({
-      path: event.nodes.path,
+      path: event.node.path,
       component: event,
       context: {
-        slug: event.nodes.path,
+        slug: event.node.path,
         previous,
         next,
       },
