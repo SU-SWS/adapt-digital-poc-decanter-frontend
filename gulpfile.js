@@ -9,7 +9,7 @@ const SASS_INCLUDE_PATHS = [
 gulp.task('styles', () => {
     return gulp.src('src/styles/scss/**/*.scss')
         .pipe(sass({ includePaths: SASS_INCLUDE_PATHS }).on('error', sass.logError))
-        .pipe(gulp.dest('src/styles/css/'));
+        .pipe(gulp.dest(path.join(__dirname, 'src/styles/css/') ));
 });
 
 gulp.task('clean', () => {
