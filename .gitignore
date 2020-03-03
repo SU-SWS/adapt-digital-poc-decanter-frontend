@@ -73,3 +73,6 @@ yarn-error.log
 
 #ide
 *.idea
+
+#decanter assets
+src/styles/assets/*
