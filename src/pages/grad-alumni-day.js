@@ -1,6 +1,27 @@
 import React from "react"
 import {graphql, Link} from "gatsby";
 import {rhythm} from "../utils/typography";
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import DOMPurify from 'dompurify';
+
+// Example for rich text document:  Note that this is matching intro correctly
+//     const document = {
+//         nodeType: 'document',
+//         content: [
+//             {
+//                 nodeType: 'paragraph',
+//                 content: [
+//                     {
+//                         nodeType: 'text',
+//                         value: 'Hello world!',
+//                         marks: [],
+//                     },
+//                 ],
+//             },
+//         ],
+//     };
+const moment = require("moment-timezone")
+moment().utcOffset(-480); // (-240, -120, -60, 0, 60, 120, 240, etc.)
 
 const GradAlumniDay = ({ data, location }) => {
 
@@ -16,7 +37,7 @@ const GradAlumniDay = ({ data, location }) => {
             <section className="su-masthead ">
             {/*<section className="su-masthead su-masthead--dark">*/}
                 <a href="#main-content" className="su-skiplinks ">Skip to main content</a>
-                <div className="su-brand-bar [ modifier_class ]">
+                <div className="su-brand-bar">
                     <div className="su-brand-bar__container">
                         {/*<a className="su-brand-bar__logo" href="https://stanford.edu">Stanford University</a>*/}
                         <Link style={{boxShadow: `none`}} to="https://stanford.edu">
@@ -91,58 +112,107 @@ const GradAlumniDay = ({ data, location }) => {
             </div>
             <div class="page-container grad-alumni-day">
                 {event.map(({ node }) => {
+                    // const renderedIntro =  documentToHtmlString(node.intro) ;
+
+
                     return (
                         <div className="grad-alumni-day--intro">
 
-                            <article class="event-session--wrapper" key={node.eventTitle}>
-                                <header>
-                                    <h1 class="event-title">{node.eventTitle}</h1>
-                                </header>
+                            <article class="event-info--wrapper" key={node.eventTitle}>
+                                <h1 class="event-title su-type-b ">{node.eventTitle}</h1>
 
-                                <div className="grad-alumni-day--date event-date">Saturday {node.eventStartDate} | Stanford University</div>
-                                <div>{node.intro.content.content ? node.intro.content.content.value : "Rich text goes here - doesn't work yet"}</div>
-                                <p>STATIC TEXT FOR NOW (Need to update to pull from contentful:) Return to campus for a day planned just for Stanford graduate alumni.
-                                    You'll get inspired with thought-provoking micro lectures, faculty talks and
-                                    conversations with fellow grad alumni before winding down at an evening wine reception
-                                    with hearty hors d'oeuvres.</p>
-                                {/* This works but we don't care about the card title:*/}
-                                {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardTitle : "no card title"}</h3>*/}
-                                {/* This doesn't work yet: */}
-                                {/*<h3>{node.eventCardsTop ? node.eventCardsTop[0].cardBody.content.content.value : "no card body"}</h3>*/}
-                                    {/*<h3>{node.sessionPeople ? node.sessionPeople[0].personDisplayName : ""}</h3>*/}
+                                <div className="grad-alumni-day--date event-date su-intro-text">Saturday {node.eventStartDate} | Stanford University</div>
+                                {/*<div class="su-big-paragraph">{node.intro.content.content ? node.intro.content.content.value : "Rich text goes here - doesn't work yet"}</div>*/}
 
-                                {/*   button should pull from the card later */}
-                                <button value="decanter" name="register-button" className="su-button" type="button">STATIC TEMP Register
-                                </button>
+
+                                <div className="su-big-paragraph event-intro--richtext" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.intro)) }}>
+                                    {/* this prints out the string which includes html tags that show badly */}
+                                    {/*{ documentToHtmlString(node.intro)}*/}
+                                </div>
+                                <a class="su-button" href={node.button ? node.button.buttonUrl : "/"}>{node.button ? node.button.buttonText : "Click Here"}</a>
 
                             </article>
+
+                            <div class="event-top-card-info">
+                                {/*Top Card info */}
+                                <h2 class=" su-type-b">{node.eventCardsTop ? node.eventCardsTop[0].cardHeader : "no card title"}</h2>
+                                {/* links here */}
+
+                                <div class="event-card--links-section">
+                                    {node.eventCardsTop.map(({ cardTopNode }) => {
+                                        // this map is being really funky.. idk why
+                                        const links = []
+                                        // if(cardTopNode) { // for some reason this breaks everything, even though it would be good to check
+
+                                            for (const [index, value] of node.eventCardsTop.entries()) {
+                                                for (const [linkIndex, linkValue] of value.cardLinks.entries()) {
+                                                // Loop through the node's link references
+                                                    links.push(
+                                                        <div class="event-card--link">
+                                                            <a href={linkValue.buttonUrl}>{linkValue.buttonText}</a>
+                                                        </div>
+                                                    )
+                                                }
+                                            }
+
+                                        return (
+                                            <div class="event-card--links-list">
+                                                {links}
+                                            </div>
+                                        )
+                                    })[0]}
+                                     {/*Had issues with looping, limited it to only one for now, should fix this later*/}
+
+                                </div>
+                            </div>
 
                         </div>
 
                     )
                 })}
+                {/* end of event loop through*/}
 
-
-                <h2>See what's in store</h2>
-                <p>Present list of sessions here (title, description, etc)</p>
 
                 {sessions.map(({ node }) => {
                     const people = []
                     if(node.sessionPeople !== null) {
                         for (const [index, value] of node.sessionPeople.entries()) {
-                            people.push(
-                                <div class="session-person">
-                                    <h3>{value.personDisplayName}</h3>
-                                    <div>{value.presentationTitle}</div>
-                                    <div>{value.personTitle}</div>
-                                    <div>{value.personClassYear + "'"}</div>
-                                    {/*var personImage == {node.sessionPeople ? node.sessionPeople[0].personImage.file.url : "no people"}</div>*/}
-                                    <div>{'File url to render next: https:' + value.personImage.file.url}</div>
-                                    {/*<img source={node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url : ""}>*/}
-                                    {/*    <img src={ require( node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url ) } />*/}
-                                    <div>{"File alt tag description: " + value.personImage.description}</div>
-                                </div>
-                            )
+
+                            // if presentation title exists, do layout 2
+                            if(value.presentationTitle !== null) {
+                                people.push(
+                                    <div class="session-person">
+                                        <div className="person-image circle-image">
+                                            {/*var personImage == {node.sessionPeople ? node.sessionPeople[0].personImage.file.url : "no people"}</div>*/}
+                                            <div>{'File url to render next: https:' + value.personImage.file.url}</div>
+                                            {/*<img source={node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url : ""}>*/}
+                                            {/*    <img src={ require( node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url ) } />*/}
+                                            <div>{"File alt tag description: " + value.personImage.description}</div>
+                                        </div>
+                                        <div className="session-person--text-content">
+                                            <div className="su-type-d">{value.presentationTitle}</div>
+                                            <div className="su-big-paragraph"><span className="person--display-name">{value.personDisplayName ? value.personDisplayName: "TBD"}</span>, {value.personClassYear ? value.personClassYear + "," : ""} {value.personTitle ? value.personTitle: ""}</div>
+                                        </div>
+                                    </div>
+                                )
+                            } else {
+                                // else do layout 1 with all person info, no lecture title
+                                people.push(
+                                    <div class="session-person">
+                                        <div class="person-image circle-image">
+                                            {/*var personImage == {node.sessionPeople ? node.sessionPeople[0].personImage.file.url : "no people"}</div>*/}
+                                            <div>{'File url to render next: https:' + value.personImage.file.url}</div>
+                                            {/*<img source={node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url : ""}>*/}
+                                            {/*    <img src={ require( node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url ) } />*/}
+                                            <div>{"File alt tag description: " + value.personImage.description}</div></div>
+                                        <div class="session-person--text-content">
+                                            <h4 className="su-type-d"><span class="person--display-name">{value.personDisplayName ? value.personDisplayName: "TBD"}</span>, {value.personClassYear ? value.personClassYear + "," : ""} {value.personTitle ? value.personTitle: ""}</h4>
+                                            <div class="su-big-paragraph">{ documentToHtmlString(value.personBiography)}</div>
+                                        </div>
+                                    </div>
+                                )
+                            }
+
                         }
                     }
 
@@ -151,14 +221,11 @@ const GradAlumniDay = ({ data, location }) => {
                         <article class="event-session--wrapper" key={node.sessionTitle}>
                             <header>
 
-                                <h3 class={"session-title"}>{node.sessionStartTime}-{node.sessionEndTime} {node.sessionTitle}</h3>
-                                <div>[Rich Text - Session Description Goes Here.]</div>
+                                <h3 class="session-title su-type-c">{node.sessionStartTime}-{node.sessionEndTime} {node.sessionTitle}</h3>
+                                {/*<div class="session-description su-subheading">{ documentToHtmlString(node.sessionDescription)}</div>*/}
                             </header>
-                            {/*<h3>{node.sessionPeople.personDisplayName}</h3>*/}
                             <div class="session-people">
-
                                 {people}
-
                             </div>
                         </article>
                     )
@@ -169,16 +236,34 @@ const GradAlumniDay = ({ data, location }) => {
                 {event.map(({ node }) => {
 
                     const priceItems = []
+                    const quotes = []
                     if(node.eventPricing !== null) {
                         for (const [index, value] of node.eventPricing.entries()) {
                             priceItems.push(
-                                <article className="su-card [ modifier_class ]">
+                                <article className="su-card">
                                     <section className="su-card__contents">
-                                        <h2>{value.productName}</h2>
-                                        <p>Rich text pricing description goes here.</p>
+                                        <h3 class="su-type-c">{value.productName}</h3>
+                                        <p className="su-small-paragraph">{ value.productDescription.productDescription}</p>
                                         <div className="product--price">{"$" + value.productPrice}</div>
-                                        <div className="product--price-type">{value.productPriceType}</div>
+                                        <div className="product--price-type su-small-paragraph">{value.productPriceType}</div>
                                     </section>
+                                </article>
+                            )
+                        }
+                    }
+
+                    if(node.quotes !== null) {
+                        for (const [index, value] of node.quotes.entries()) {
+                            quotes.push(
+                                <article className="event-quote">
+
+                                    <h4 class="su-type-c text-centered event-quote--text">{value.testimonialText.testimonialText}</h4>
+
+                                    {/*<div className="su-small-paragraph text-centered">{value.testimonialAuthor}</div>*/}
+                                    <div className="su-small-paragraph text-centered">- Author goes here</div>
+
+                                    {/*<div>Quote Author: {node.quotes ? "https:" + node.quotes[0].testimonialAuthor : "Quote Author"}</div>*/}
+
                                 </article>
                             )
                         }
@@ -190,7 +275,7 @@ const GradAlumniDay = ({ data, location }) => {
                             <section class="event-pricing--wrapper" key={node.eventPricing ? node.eventPricing[0].productName : "Event Pricing"}>
                                 <div class="event-pricing--inner-wrapper text-centered">
                                     <header>
-                                        <h2 class={"event-pricing"}>Pricing</h2>
+                                        <h2 class="event-pricing--heading su-type-b">Pricing</h2>
                                     </header>
                                     <div className="price-items--wrapper">
                                         {priceItems}
@@ -202,21 +287,21 @@ const GradAlumniDay = ({ data, location }) => {
 
                                 < article className = "event-video--wrapper text-centered"  key="Video Section">
 
-                                    <div class="watch-video-label">Watch</div>
-                                    <h3 class="video-title-label">Video Title: {node.video ?  node.video.title : "Video Title"}</h3>
+                                    <div class="watch-video-label su-intro-text text-centered">Watch</div>
+                                    <h3 class="video-title-label su-type-b">{node.video ?  node.video.title : ""}</h3>
 
+                                    {/*<video width="320" height="240" controls>*/}
+                                    {/*    <source src="movie.mp4" type="video/mp4">*/}
+                                    {/*        <source src="movie.ogg" type="video/ogg">*/}
+                                    {/*            Your browser does not support the video tag.*/}
+                                    {/*</video>*/}
                                     <div>Video url: {node.video ? "https:" + node.video.file.url : "Video Url"}</div>
                                     <div>Rich Text - Video description goes here later</div>
                                     {/*// {node.video.description}*/}
                                 </article>
 
                                 < article className = "event-quote--wrapper"  key="Quote Section">
-
-                                    <h4 class="text-centered">Rich text - Quote testimonialText field goes here</h4>
-
-                                    <div className="text-centered">- Quote Author goes here</div>
-
-                                    {/*<div>Quote Author: {node.quotes ? "https:" + node.quotes[0].testimonialAuthor : "Quote Author"}</div>*/}
+                                    {quotes}
 
                                 </article>
 
@@ -227,7 +312,7 @@ const GradAlumniDay = ({ data, location }) => {
                 })}
 
 
-            <div className="su-local-footer [ modifier_class ]">
+            <div className="su-local-footer ">
                 <header className="su-local-footer__header">
                     <div className="su-lockup su-lockup--option-a">
                         <div className="su-lockup__cell1">
@@ -441,16 +526,28 @@ query GradAlumniData {
         heroAltText
         eventTitle
         intro {
+          nodeType
           content {
+            nodeType
             content {
+              nodeType
               value
+              marks {
+                type
+              }
+              
             }
           }
+        }
+        button {
+          buttonText
+          buttonUrl
         }
         eventStartDate(formatString: "MMMM Do, YYYY")
         eventEndDate(formatString: "MMMM Do, YYYY h:mm")
         eventCardsTop {
           cardTitle
+          cardHeader
           cardBody {
             content {
               content {
@@ -458,11 +555,18 @@ query GradAlumniData {
               }
             }
           }
+          cardLinks {
+            buttonText
+            buttonUrl
+          }
         }
         eventPricing {
           productName
           productPrice 
           productPriceType
+          productDescription {
+            productDescription  
+          }
         }
         video {
           title
@@ -471,11 +575,17 @@ query GradAlumniData {
             url
           }
         }
-
+        quotes {
+          testimonialText {
+            testimonialText 
+          }
+          
+        }
+        
       }
     }
   }
-  allContentfulEventSession(filter: {event: {elemMatch: {id: {eq: "712f2cb1-31de-5232-83f8-0c50210b9de2"}}}}, sort: {fields: sessionStartTime}) {
+  allContentfulEventSession(filter: {event: {elemMatch: {id: {eq: "712f2cb1-31de-5232-83f8-0c50210b9de2"}}}}, sort: {fields: sessionStartTime, order: ASC}) {
     totalCount
     edges {
       node {
@@ -483,9 +593,14 @@ query GradAlumniData {
         sessionStartTime(formatString: "h:mm")
         sessionEndTime(formatString: "h:mm a")
         sessionDescription {
+          nodeType
           content {
+            nodeType
             content {
+              nodeType
               value
+             
+              
             }
           }
         }
@@ -522,4 +637,9 @@ query GradAlumniData {
 // quotes {
 //   testimonialTitle
 //   testimonialAuthor
+// }
+
+
+// marks {   // for some reason, not available on session Description field
+//   type
 // }
