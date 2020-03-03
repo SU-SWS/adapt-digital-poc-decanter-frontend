@@ -1,4 +1,5 @@
 const dotenv = require('dotenv')
+const path = require('path');
 
 // if it IS production, that environment would have the access token
 // this is for development
@@ -20,6 +21,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sass`,
       options: {
+        includePaths: [path.resolve(__dirname, 'node_modules')],
         cssLoaderOptions: {
           camelCase: false,
         },
