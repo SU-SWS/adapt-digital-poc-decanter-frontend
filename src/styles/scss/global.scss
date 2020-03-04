@@ -1,9 +1,8 @@
+@charset 'UTF-8';
+$su-image-path: "~decanter/core/src/img";
+$fa-font-path:  "~@fortawesome/fontawesome-free/webfonts";
 
-$test_color: #f09f09;
-
-html {
-    background-color: $test_color;
-}
+@import 'decanter/core/src/scss/decanter.scss';
 
 /* masthead */
 
@@ -27,19 +26,54 @@ html {
 }
 .grad-alumni-day--date {
     font-size: 24px;
+    @include modular-spacing('margin', null null 3 null);
+}
+.event-intro--richtext {
+     @include modular-spacing('margin', null null 3 null);
+ }
+
+.event-info--wrapper {
+    //padding: 27px 45px;
+    @include modular-spacing('margin', 7 null 7 null);
 }
 
+
+// top card info
+.event-top-card-info {
+    text-align: left;
+}
+
+// session styles
 .event-session--wrapper {
-    padding: 27px 45px;
+    @include modular-spacing('margin', null null 7 null);
+
 }
 
+.circle-image {
+    border-radius: 50%;
+}
 .session {
     margin-bottom: 26px;
     font-weight: bold;
 }
+.session-description, session-person--text-content {
+    @include modular-spacing('margin', 1 null 3 null);
+}
+.session-person {
+    display: flex;
+    .person-image {
+        width: 108px;
+        @include modular-spacing('margin', null 1 3 null);
+    }
+    .person--display-name {
+        //text-decoration: underline;
+        //color: $su-color-bright-red;
+    }
+}
 
 .event-pricing--wrapper {
-    padding: 90px 0 108px 0;
+    @include modular-spacing('padding', 6 null 7 null);
+
     background: #f4f4f4;
     /* set background to light gray here - secondary fog color*/
 }
@@ -60,9 +94,18 @@ html {
     width: 493px;
     margin-bottom: 30px;
 }
+.event-pricing--heading {
+    @include modular-spacing('margin', null null 4 null);
+
+}
 
 .product--price {
-    /*font style 5*/
+    @include modular-typography(5);
+    letter-spacing: -0.016em;
+
+    @include grid-media-max('sm') {
+        font-size: modular-scale(5) * $su-displays-mobile-factor;
+    }
     font-size: 40px;
     font-weight: bold;
 }
@@ -75,7 +118,9 @@ html {
     padding: 109px 30px 108px;
 }
 .watch-video-label {
-    margin-bottom: 18px;
+    @include modular-spacing('margin', 0 null null null);
+    margin-left: auto;
+    margin-right: auto;
 }
 .video-title-label {
     margin-bottom: 36px;
@@ -83,5 +128,11 @@ html {
 
 
 .event-quote--wrapper {
-    margin-bottom: 45px;
+    @include modular-spacing('padding', 2 2 3 2);
+    width: 811px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.event-quote--text {
+    text-transform: none;
 }
