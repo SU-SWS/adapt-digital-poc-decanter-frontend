@@ -112,9 +112,6 @@ const GradAlumniDay = ({ data, location }) => {
             </div>
             <div class="page-container grad-alumni-day">
                 {event.map(({ node }) => {
-                    // const renderedIntro =  documentToHtmlString(node.intro) ;
-
-
                     return (
                         <div className="grad-alumni-day--intro">
 
@@ -207,7 +204,8 @@ const GradAlumniDay = ({ data, location }) => {
                                             <div>{"File alt tag description: " + value.personImage.description}</div></div>
                                         <div class="session-person--text-content">
                                             <h4 className="su-type-d"><span class="person--display-name">{value.personDisplayName ? value.personDisplayName: "TBD"}</span>, {value.personClassYear ? value.personClassYear + "," : ""} {value.personTitle ? value.personTitle: ""}</h4>
-                                            <div class="su-big-paragraph">{ documentToHtmlString(value.personBiography)}</div>
+                                            {/*<div class="su-big-paragraph" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(value.personBiography)) }}></div>*/}
+                                            <div class="su-big-paragraph"> { documentToHtmlString(value.personBiography) }></div>
                                         </div>
                                     </div>
                                 )
@@ -295,8 +293,12 @@ const GradAlumniDay = ({ data, location }) => {
                                     {/*        <source src="movie.ogg" type="video/ogg">*/}
                                     {/*            Your browser does not support the video tag.*/}
                                     {/*</video>*/}
-                                    <div>Video url: {node.video ? "https:" + node.video.file.url : "Video Url"}</div>
-                                    <div>Rich Text - Video description goes here later</div>
+                                    <iframe width="420" height="315"
+                                            // src={"https://www.youtube.com/embed/UbLIkcZ9RMs"}>
+                                            src={node.videoUrls ? node.videoUrls : ""}>
+                                    </iframe>
+                                    <div>Video url: {node.videoUrls ? node.videoUrls : "Video Url"}</div>
+                                    {/*<div>Rich Text - Video description goes here later</div>*/}
                                     {/*// {node.video.description}*/}
                                 </article>
 
@@ -575,6 +577,7 @@ query GradAlumniData {
             url
           }
         }
+        videoUrls
         quotes {
           testimonialText {
             testimonialText 
@@ -617,10 +620,16 @@ query GradAlumniData {
             description
             title
           }
-          personBiography {
+          personBiography  {
+            nodeType
             content {
+              nodeType
               content {
+                nodeType
                 value
+                marks {
+                  type
+                }
               }
             }
           }
