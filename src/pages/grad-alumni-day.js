@@ -187,13 +187,13 @@ const GradAlumniDay = ({ data, location }) => {
                                             <div>{"File alt tag description: " + value.personImage.description}</div>
                                         </div>
                                         <div className="session-person--text-content">
-                                            <div className="su-type-d">{value.presentationTitle}</div>
+                                            <div className="su-type-d presentation-title">{value.presentationTitle}</div>
                                             <div className="su-big-paragraph"><span className="person--display-name">{value.personDisplayName ? value.personDisplayName: "TBD"}</span>, {value.personClassYear ? value.personClassYear + "," : ""} {value.personTitle ? value.personTitle: ""}</div>
                                         </div>
                                     </div>
                                 )
                             } else {
-                                // else do layout 1 with all person info, no lecture title
+                                // else do layout 1 with all person info, no lecture title, but yes include person biography
                                 people.push(
                                     <div class="session-person">
                                         <div class="person-image circle-image">
@@ -205,7 +205,8 @@ const GradAlumniDay = ({ data, location }) => {
                                         <div class="session-person--text-content">
                                             <h4 className="su-type-d"><span class="person--display-name">{value.personDisplayName ? value.personDisplayName: "TBD"}</span>, {value.personClassYear ? value.personClassYear + "," : ""} {value.personTitle ? value.personTitle: ""}</h4>
                                             {/*<div class="su-big-paragraph" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(value.personBiography)) }}></div>*/}
-                                            <div class="su-big-paragraph"> { documentToHtmlString(value.personBiography) }></div>
+                                            {/*<div class="su-big-paragraph"> { documentToHtmlString(value.personBiography) }</div>*/}
+                                            <div class="su-big-paragraph" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(value.personBiography)) }}></div>
                                         </div>
                                     </div>
                                 )
@@ -221,6 +222,7 @@ const GradAlumniDay = ({ data, location }) => {
 
                                 <h3 class="session-title su-type-c">{node.sessionStartTime}-{node.sessionEndTime} {node.sessionTitle}</h3>
                                 {/*<div class="session-description su-subheading">{ documentToHtmlString(node.sessionDescription)}</div>*/}
+                                {/*<div className="session-description su-subheading" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.sessionDescription)) }}></div>*/}
                             </header>
                             <div class="session-people">
                                 {people}
@@ -257,8 +259,8 @@ const GradAlumniDay = ({ data, location }) => {
 
                                     <h4 class="su-type-c text-centered event-quote--text">{value.testimonialText.testimonialText}</h4>
 
-                                    {/*<div className="su-small-paragraph text-centered">{value.testimonialAuthor}</div>*/}
-                                    <div className="su-small-paragraph text-centered">- Author goes here</div>
+                                    <div className="su-small-paragraph text-centered">{value.testimonialAuthor}</div>
+                                    {/*<div className="su-small-paragraph text-centered">- Author goes here</div>*/}
 
                                     {/*<div>Quote Author: {node.quotes ? "https:" + node.quotes[0].testimonialAuthor : "Quote Author"}</div>*/}
 
@@ -294,8 +296,8 @@ const GradAlumniDay = ({ data, location }) => {
                                     {/*            Your browser does not support the video tag.*/}
                                     {/*</video>*/}
                                     <iframe width="420" height="315"
-                                            // src={"https://www.youtube.com/embed/UbLIkcZ9RMs"}>
-                                            src={node.videoUrls ? node.videoUrls : ""}>
+                                            src={"https://www.youtube.com/embed/UbLIkcZ9RMs"}>
+                                            {/*src={node.videoUrls ? node.videoUrls : ""}>*/}
                                     </iframe>
                                     <div>Video url: {node.videoUrls ? node.videoUrls : "Video Url"}</div>
                                     {/*<div>Rich Text - Video description goes here later</div>*/}
@@ -577,8 +579,8 @@ query GradAlumniData {
             url
           }
         }
-        videoUrls
         quotes {
+          testimonialAuthor
           testimonialText {
             testimonialText 
           }
@@ -602,12 +604,14 @@ query GradAlumniData {
             content {
               nodeType
               value
-             
-              
+              marks {
+                type
+              }
             }
           }
         }
         sessionPeople {
+          presentationTitle
           personDisplayName
           personTitle
           personClassYear
