@@ -4,6 +4,17 @@ $fa-font-path:  "~@fortawesome/fontawesome-free/webfonts";
 
 @import 'decanter/core/src/scss/decanter.scss';
 
+/* general */
+
+a {
+    text-decoration: none;
+}
+a:hover, a:focus {
+    text-decoration: underline;
+}
+
+
+
 /* masthead */
 
 .su-lockup__line1.su-handwriting.ad-logo {
@@ -24,6 +35,16 @@ $fa-font-path:  "~@fortawesome/fontawesome-free/webfonts";
     padding: 0 0 30px 0;
     text-align: center;
 }
+
+.event-card--link {
+    @include modular-spacing('margin', null null 1 null);
+    @include link-icon(caret-right, 10px, right, 0.06em);
+}
+.event-card--link:last-of-type {
+    margin-bottom: 0px;
+}
+
+
 .grad-alumni-day--date {
     font-size: 24px;
     @include modular-spacing('margin', null null 3 null);
