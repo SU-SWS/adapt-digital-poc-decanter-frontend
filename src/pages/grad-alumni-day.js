@@ -1,6 +1,5 @@
 import React from "react"
 import {graphql, Link} from "gatsby";
-import {rhythm} from "../utils/typography";
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import DOMPurify from 'dompurify';
 
