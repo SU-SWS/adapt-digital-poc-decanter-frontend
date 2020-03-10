@@ -221,8 +221,8 @@ const GradAlumniDay = ({ data, location }) => {
                             <header>
 
                                 <h3 class="session-title su-type-c">{node.sessionStartTime}-{node.sessionEndTime} {node.sessionTitle}</h3>
-                                {/*<div class="session-description su-subheading">{ documentToHtmlString(node.sessionDescription)}</div>*/}
-                                {/*<div className="session-description su-subheading" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.sessionDescription)) }}></div>*/}
+                                {/*<div class="session-description su-subheading">{ documentToHtmlString(node.sessionDescriptionText)}</div>*/}
+                                <div className="session-description su-subheading" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.sessionDescriptionText)) }}></div>
                             </header>
                             <div class="session-people">
                                 {people}
@@ -590,14 +590,14 @@ query GradAlumniData {
       }
     }
   }
-  allContentfulEventSession(filter: {event: {elemMatch: {id: {eq: "712f2cb1-31de-5232-83f8-0c50210b9de2"}}}}, sort: {fields: sessionStartTime, order: ASC}) {
+  allContentfulEventSession( sort: {fields: sessionStartTime, order: ASC}) {
     totalCount
     edges {
       node {
         sessionTitle
         sessionStartTime(formatString: "h:mm")
         sessionEndTime(formatString: "h:mm a")
-        sessionDescription {
+        sessionDescriptionText {
           nodeType
           content {
             nodeType
