@@ -296,9 +296,8 @@ const GradAlumniDay = ({ data, location }) => {
                                     {/*</video>*/}
                                     <iframe width="420" height="315"
                                             // src={"https://www.youtube.com/embed/UbLIkcZ9RMs"}>
-                                            src={node.videoUrls ? node.videoPlaybackUrl : ""}>
+                                            src={node.videoPlaybackUrl ? node.videoPlaybackUrl : ""}>
                                     </iframe>
-                                    <div>Video url: {node.videoPlaybackUrl ? node.videoPlaybackUrl : "Video Url"}</div>
                                     {/*<div>Rich Text - Video description goes here later</div>*/}
                                     {/*// {node.video.description}*/}
                                 </article>
