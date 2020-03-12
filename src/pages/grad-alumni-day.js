@@ -289,17 +289,11 @@ const GradAlumniDay = ({ data, location }) => {
                                     <div class="watch-video-label su-intro-text text-centered">Watch</div>
                                     <h3 class="video-title-label su-type-b">{node.video ?  node.video.title : ""}</h3>
 
-                                    {/*<video width="320" height="240" controls>*/}
-                                    {/*    <source src="movie.mp4" type="video/mp4">*/}
-                                    {/*        <source src="movie.ogg" type="video/ogg">*/}
-                                    {/*            Your browser does not support the video tag.*/}
-                                    {/*</video>*/}
-                                    <iframe width="420" height="315"
+                                    <iframe width="460" height="260"
                                             // src={"https://www.youtube.com/embed/UbLIkcZ9RMs"}>
                                             src={node.videoPlaybackUrl ? node.videoPlaybackUrl : ""}>
                                     </iframe>
-                                    {/*<div>Rich Text - Video description goes here later</div>*/}
-                                    {/*// {node.video.description}*/}
+
                                 </article>
 
                                 < article className = "event-quote--wrapper"  key="Quote Section">
