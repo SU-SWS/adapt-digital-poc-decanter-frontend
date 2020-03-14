@@ -108,7 +108,7 @@ const GradAlumniDay = ({ data, location }) => {
                 return (
                     <div className="grad-alumni-banner">
                         {/*  Need to check documentation and get this image working and referencing correctly */}
-                        <img src={node.hero.file.url} alt={node.heroAltText}></img>
+                        <img src={node.hero.file.url + '?w=960'} alt={node.heroAltText}></img>
                     </div>
                 )
             })}
@@ -205,7 +205,6 @@ const GradAlumniDay = ({ data, location }) => {
 
                         <article class="event-session--wrapper" key={node.sessionTitle}>
                             <header>
-
                                 <h3 class="session-title su-type-c">{node.sessionStartTime}-{node.sessionEndTime} {node.sessionTitle}</h3>
                                 <div className="session-description su-subheading" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.sessionDescriptionText)) }}></div>
                             </header>
@@ -241,14 +240,8 @@ const GradAlumniDay = ({ data, location }) => {
                         for (const [index, value] of node.quotes.entries()) {
                             quotes.push(
                                 <article className="event-quote">
-
                                     <h4 class="su-type-c text-centered event-quote--text">{value.testimonialText.testimonialText}</h4>
-
                                     <div className="su-small-paragraph text-centered">{value.testimonialAuthor}</div>
-                                    {/*<div className="su-small-paragraph text-centered">- Author goes here</div>*/}
-
-                                    {/*<div>Quote Author: {node.quotes ? "https:" + node.quotes[0].testimonialAuthor : "Quote Author"}</div>*/}
-
                                 </article>
                             )
                         }
@@ -276,7 +269,6 @@ const GradAlumniDay = ({ data, location }) => {
                                     <h3 class="video-title-label su-type-b">{node.video ?  node.video.title : ""}</h3>
 
                                     <iframe width="460" height="260"
-                                            // src={"https://www.youtube.com/embed/UbLIkcZ9RMs"}>
                                             src={node.videoPlaybackUrl ? node.videoPlaybackUrl : ""}>
                                     </iframe>
 
