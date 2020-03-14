@@ -104,11 +104,15 @@ const GradAlumniDay = ({ data, location }) => {
                     </nav>
                 </section>
             </section>
-            <div class="grad-alumni-banner">
-                {/*  Need to check documentation and get this image working and referencing correctly */}
-                {/*<img source={node.hero.file.url} alt_tag={node.heroAltText}></img>*/}
-
-            </div>
+            {event.map(({ node }) => {
+                return (
+                    <div className="grad-alumni-banner">
+                        {/*  Need to check documentation and get this image working and referencing correctly */}
+                        <img src={node.hero.file.url} alt={node.heroAltText}></img>
+                    </div>
+                )
+            })}
+            {/* end of event loop through*/}
             <div class="page-container grad-alumni-day">
                 {event.map(({ node }) => {
                     return (
@@ -116,14 +120,8 @@ const GradAlumniDay = ({ data, location }) => {
 
                             <article class="event-info--wrapper" key={node.eventTitle}>
                                 <h1 class="event-title su-type-b ">{node.eventTitle}</h1>
-
                                 <div className="grad-alumni-day--date event-date su-intro-text">Saturday {node.eventStartDate} | Stanford University</div>
-                                {/*<div class="su-big-paragraph">{node.intro.content.content ? node.intro.content.content.value : "Rich text goes here - doesn't work yet"}</div>*/}
-
-
                                 <div className="su-big-paragraph event-intro--richtext" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.intro)) }}>
-                                    {/* this prints out the string which includes html tags that show badly */}
-                                    {/*{ documentToHtmlString(node.intro)}*/}
                                 </div>
                                 <a class="su-button" href={node.button ? node.button.buttonUrl : "/"}>{node.button ? node.button.buttonText : "Click Here"}</a>
 
@@ -132,7 +130,6 @@ const GradAlumniDay = ({ data, location }) => {
                             <div class="event-top-card-info">
                                 {/*Top Card info */}
                                 <h2 class=" su-type-b">{node.eventCardsTop ? node.eventCardsTop[0].cardHeader : "no card title"}</h2>
-                                {/* links here */}
 
                                 <div class="event-card--links-section">
                                     {node.eventCardsTop.map(({ cardTopNode }) => {
@@ -157,7 +154,6 @@ const GradAlumniDay = ({ data, location }) => {
                                             </div>
                                         )
                                     })[0]}
-                                     {/*Had issues with looping, limited it to only one for now, should fix this later*/}
 
                                 </div>
                             </div>
@@ -179,11 +175,7 @@ const GradAlumniDay = ({ data, location }) => {
                                 people.push(
                                     <div class="session-person">
                                         <div className="person-image circle-image">
-                                            {/*var personImage == {node.sessionPeople ? node.sessionPeople[0].personImage.file.url : "no people"}</div>*/}
-                                            <div>{'File url to render next: https:' + value.personImage.file.url}</div>
-                                            {/*<img source={node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url : ""}>*/}
-                                            {/*    <img src={ require( node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url ) } />*/}
-                                            <div>{"File alt tag description: " + value.personImage.description}</div>
+                                            <img src={value.personImage.file.url + "?w=200"} alt={value.personImage.description}/>
                                         </div>
                                         <div className="session-person--text-content">
                                             <div className="su-type-d presentation-title">{value.presentationTitle}</div>
@@ -196,15 +188,10 @@ const GradAlumniDay = ({ data, location }) => {
                                 people.push(
                                     <div class="session-person">
                                         <div class="person-image circle-image">
-                                            {/*var personImage == {node.sessionPeople ? node.sessionPeople[0].personImage.file.url : "no people"}</div>*/}
-                                            <div>{'File url to render next: https:' + value.personImage.file.url}</div>
-                                            {/*<img source={node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url : ""}>*/}
-                                            {/*    <img src={ require( node.sessionPeople ? 'https:' + node.sessionPeople[0].personImage.file.url ) } />*/}
-                                            <div>{"File alt tag description: " + value.personImage.description}</div></div>
+                                            <img src={value.personImage.file.url + "?w=200"} alt={value.personImage.description}/>
+                                        </div>
                                         <div class="session-person--text-content">
                                             <h4 className="su-type-d"><span class="person--display-name">{value.personDisplayName ? value.personDisplayName: "TBD"}</span>, {value.personClassYear ? value.personClassYear + "," : ""} {value.personTitle ? value.personTitle: ""}</h4>
-                                            {/*<div class="su-big-paragraph" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(value.personBiography)) }}></div>*/}
-                                            {/*<div class="su-big-paragraph"> { documentToHtmlString(value.personBiography) }</div>*/}
                                             <div class="su-big-paragraph" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(value.personBiography)) }}></div>
                                         </div>
                                     </div>
@@ -220,7 +207,6 @@ const GradAlumniDay = ({ data, location }) => {
                             <header>
 
                                 <h3 class="session-title su-type-c">{node.sessionStartTime}-{node.sessionEndTime} {node.sessionTitle}</h3>
-                                {/*<div class="session-description su-subheading">{ documentToHtmlString(node.sessionDescriptionText)}</div>*/}
                                 <div className="session-description su-subheading" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.sessionDescriptionText)) }}></div>
                             </header>
                             <div class="session-people">
