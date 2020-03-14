@@ -98,6 +98,10 @@ $profile-circle-width: 108px;
 }
 .session-person {
     display: flex;
+    @include modular-spacing('margin', null null null 3);
+    &:last-of-type {
+        margin-bottom: 0px; // margin is handled by parent wrapper element
+    }
     .person-image {
         width: $profile-circle-width;
         @include modular-spacing('margin', null 1 3 null);
