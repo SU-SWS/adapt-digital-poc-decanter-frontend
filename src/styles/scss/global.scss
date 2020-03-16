@@ -180,3 +180,11 @@ $profile-circle-width: 108px;
 .event-quote--text {
     text-transform: none;
 }
+
+
+.su-local-footer  a {
+    color: $su-color-bright-red;
+    &:focus, &:hover {
+        color: $su-color-black;
+    }
+}
