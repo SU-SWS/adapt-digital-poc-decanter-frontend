@@ -16,7 +16,14 @@ a:hover, a:focus {
 
 
 /* masthead */
-
+.su-brand-bar__container {
+    padding-top: 4px;
+    a {
+        color: #fff;
+        text-decoration: none;
+        vertical-align: middle;
+    }
+}
 .su-lockup__line1.su-handwriting.ad-logo {
     text-transform: none;
 }
