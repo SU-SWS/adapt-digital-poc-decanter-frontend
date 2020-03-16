@@ -25,6 +25,7 @@ moment().utcOffset(-480); // (-240, -120, -60, 0, 60, 120, 240, etc.)
 const GradAlumniDay = ({ data, location }) => {
 
     const event = data.allContentfulEvent.edges
+    const siteBranding = data.allContentfulSiteBrandIdentity.edges
     const sessions = data.allContentfulEventSession.edges
 
 
@@ -47,14 +48,19 @@ const GradAlumniDay = ({ data, location }) => {
                 <section>
                     <div className="su-lockup su-lockup--option-l">
                         <a href="https://decanter.stanford.edu">
-                            <div className="su-lockup__cell1">
-                                <div className="su-lockup__wordmark-wrapper">
-                                    <span className="su-lockup__wordmark">Stanford</span>
-                                </div>
-                            </div>
-                            <div className="su-lockup__cell2">
-                                <span className="su-lockup__line1  su-handwriting ad-logo">alumni</span>
-                            </div>
+
+                            {siteBranding.map(({ node }) => {
+                                return (
+                                    <div className="alumni-logo">
+                                        {/*  Putting placeholder hard-coded alt tag until
+                                        graphql/gatsby can pull the new alt tag field from contentful
+                                        - delay in being able to access the field. */}
+                                        <img src={node.mastheadLogo.file.url + '?w=325'} alt="Stanford Alumni Logo"></img>
+                                    </div>
+                                )
+                            })}
+
+
                         </a>
                     </div>
                     <div className="su-site-search " role="search">
@@ -486,6 +492,17 @@ query GradAlumniData {
   site {
     siteMetadata {
       title
+    }
+  }
+  allContentfulSiteBrandIdentity {
+    edges {
+      node {
+        mastheadLogo {
+          file {
+            url
+          }
+        }
+      }
     }
   }
   allContentfulEvent(filter: {id: {eq: "712f2cb1-31de-5232-83f8-0c50210b9de2"}}) {
