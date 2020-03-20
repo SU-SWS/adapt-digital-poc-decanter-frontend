@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+// import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -72,26 +72,26 @@ const EventIndex = ({ data, location }) => {
 
 export default EventIndex
 
-const document = {
-    nodeType: 'document',
-    data: {},
-    content: [
-        {
-            nodeType: 'paragraph',
-            data: {},
-            content: [
-                {
-                    nodeType: 'text',
-                    value: 'Hello world!',
-                    marks: [],
-                    data: {}
-                },
-            ],
-        },
-    ],
-};
+// const document = {
+//     nodeType: 'document',
+//     data: {},
+//     content: [
+//         {
+//             nodeType: 'paragraph',
+//             data: {},
+//             content: [
+//                 {
+//                     nodeType: 'text',
+//                     value: 'Hello world!',
+//                     marks: [],
+//                     data: {}
+//                 },
+//             ],
+//         },
+//     ],
+// };
 
-documentToReactComponents(document); // -> <p>Hello world!</p>
+// documentToReactComponents(document); // -> <p>Hello world!</p>
 
 
 
