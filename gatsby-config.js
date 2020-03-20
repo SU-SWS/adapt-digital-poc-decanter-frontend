@@ -3,9 +3,9 @@ const path = require('path');
 
 // if it IS production, that environment would have the access token
 // this is for development
-if(process.env.NODE_ENV !== 'production') {
-  dotenv.config()
-}
+// if(process.env.NODE_ENV !== 'production') {
+//   dotenv.config()
+// }
 
 module.exports = {
   siteMetadata: {
@@ -94,11 +94,11 @@ module.exports = {
     {
       resolve: 'gatsby-source-contentful',
       options: {
-        spaceId: 'cs5qabgr3o99',
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
         //  It's not a good idea to place the actual accessToken here due to git tracking etc.
         //  so we make it available as an environment variable, using the package
-        downloadLocal: true,
+        // downloadLocal: true,
         // Downloads and caches Contentful Assets to the local filesystem.
         // Useful for reduced data usage in development or projects where you want the assets copied locally with builds for deploying without links to Contentful’s CDN.
       }
