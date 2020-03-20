@@ -94,7 +94,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-contentful',
       options: {
-        spaceId: 'cs5qabgr3o99',
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
         //  It's not a good idea to place the actual accessToken here due to git tracking etc.
         //  so we make it available as an environment variable, using the package
