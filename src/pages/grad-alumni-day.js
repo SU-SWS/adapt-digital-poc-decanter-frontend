@@ -1,7 +1,7 @@
 import React from "react"
 import {graphql, Link} from "gatsby";
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import DOMPurify from 'dompurify';
+// import DOMPurify from 'dompurify';
 
 // Example for rich text document:  Note that this is matching intro correctly
 //     const document = {
@@ -127,7 +127,8 @@ const GradAlumniDay = ({ data, location }) => {
                             <article class="event-info--wrapper" key={node.eventTitle}>
                                 <h1 class="event-title su-type-b ">{node.eventTitle}</h1>
                                 <div className="grad-alumni-day--date event-date su-intro-text">Saturday {node.eventStartDate} | Stanford University</div>
-                                <div className="su-big-paragraph event-intro--richtext" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.intro)) }}></div>
+                                {/* <div className="su-big-paragraph event-intro--richtext" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.intro)) }}></div> */}
+                                <div className="su-big-paragraph event-intro--richtext" dangerouslySetInnerHTML={{__html: documentToHtmlString(node.intro) }}></div>
                                 <a class="su-button" href={node.button ? node.button.buttonUrl : "/"}>{node.button ? node.button.buttonText : "Click Here"}</a>
 
                             </article>
@@ -197,7 +198,8 @@ const GradAlumniDay = ({ data, location }) => {
                                         </div>
                                         <div class="session-person--text-content">
                                             <h4 className="su-type-d"><span class="person--display-name">{value.personDisplayName ? value.personDisplayName: "TBD"}</span>, {value.personClassYear ? value.personClassYear + "," : ""} {value.personTitle ? value.personTitle: ""}</h4>
-                                            <div class="su-big-paragraph" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(value.personBiography)) }}></div>
+                                            {/* <div class="su-big-paragraph" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(value.personBiography)) }}></div> */}
+                                            <div class="su-big-paragraph" dangerouslySetInnerHTML={{__html: documentToHtmlString(value.personBiography) }}></div>
                                         </div>
                                     </div>
                                 )
@@ -211,7 +213,8 @@ const GradAlumniDay = ({ data, location }) => {
                         <article class="event-session--wrapper" key={node.sessionTitle}>
                             <header>
                                 <h3 class="session-title su-type-c">{node.sessionStartTime}-{node.sessionEndTime} {node.sessionTitle}</h3>
-                                <div className="session-description su-subheading" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.sessionDescriptionText)) }}></div>
+                                {/* <div className="session-description su-subheading" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(documentToHtmlString(node.sessionDescriptionText)) }}></div> */}
+                                <div className="session-description su-subheading" dangerouslySetInnerHTML={{__html: documentToHtmlString(node.sessionDescriptionText) }}></div>
                             </header>
                             <div class="session-people">
                                 {people}
